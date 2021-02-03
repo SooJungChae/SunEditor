@@ -302,6 +302,11 @@
     margin: 0 0 10px auto;
 }
 
+.sun-editor-editable table caption {
+    padding: 4px 0;
+    border: 1px solid #e1e1e1;
+    border-bottom: 0px;
+}
 .sun-editor-editable table thead {
     border-bottom: 2px solid #333;
 }
@@ -334,6 +339,15 @@
     border: 1px double #4592ff;
     background-color: #f1f7ff;
 }
+.sun-editor-editable table[contenteditable=false] .se-table-selected-cell, 
+.sun-editor-editable table tr[contenteditable=false] .se-table-selected-cell, 
+.sun-editor-editable table td[contenteditable=false].se-table-selected-cell, 
+.sun-editor-editable table th[contenteditable=false].se-table-selected-cell {
+    border: 1px double #b1b1b1;
+    background-color: #f9f9f9;
+}
+
+/** disabled editor */
 .sun-editor-editable.se-disabled * {
     user-select: none;
     -o-user-select: none;
@@ -357,6 +371,58 @@
 /** component copy effect */
 .sun-editor-editable[contenteditable=true] .se-component.se-component-copy {
     -webkit-box-shadow:0 0 0 0.2rem #80bdff; box-shadow:0 0 0 0.2rem #3f9dff; transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+/** component line */
+.sun-editor-editable .se-component-line {
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+.sun-editor-editable[contenteditable="true"] .se-component-line::after {
+    position: absolute;
+    content: '';
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: default;
+    display: block;
+    background: rgba(0,0,0,0);
+}
+/** component line - button */
+.sun-editor-editable button, .sun-editor-editable button.se-component-line {
+    min-width: 24px;
+    min-height: 18px;
+    overflow: hidden;
+    vertical-align: middle;
+    border: 1px solid #6c757d;
+    color: #6c757d;
+    padding: 0.1rem 0.3rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    touch-action: manipulation;
+    cursor: pointer;
+    outline: none;
+}
+.sun-editor-editable button:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #51585e;
+}
+.sun-editor-editable button:active {
+    background-color:#6c757d;
+    border-color:#51585e;
+    -webkit-box-shadow:inset 0 0.3rem 0.5rem #51585e;
+    box-shadow:inset 0 0.3rem 0.5rem #51585e;
+}
+/** component line - select */
+.sun-editor-editable select {
+    min-width: 34px;
 }
 
 /** image, video .. */

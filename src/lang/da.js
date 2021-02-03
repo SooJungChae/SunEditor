@@ -74,6 +74,7 @@
             tag_blockquote: 'Citer',
             tag_pre: 'Code',
             template: 'Schablone',
+            layout: 'Layout',
             lineHeight: 'Linjehøjde',
             paragraphStyle: 'Afsnitstil',
             textStyle: 'Tekststil',
@@ -90,7 +91,7 @@
                 bookmark: 'Bogmærke'
             },
             mathBox: {
-                title: 'Math',
+                title: 'Indsæt math',
                 inputLabel: 'Matematisk notation',
                 fontSizeLabel: 'Skriftstørrelse',
                 previewLabel: 'Preview'
@@ -102,12 +103,12 @@
                 altText: 'Alternativ tekst'
             },
             videoBox: {
-                title: 'Indsæt Video',
+                title: 'Indsæt video',
                 file: 'Indsæt fra fil',
                 url: 'Indlejr video / YouTube,Vimeo'
             },
             audioBox: {
-                title: 'Indsæt Audio',
+                title: 'Indsæt audio',
                 file: 'Indsæt fra fil',
                 url: 'Indsæt fra URL'
             },
@@ -155,7 +156,8 @@
             mergeCells: 'Sammenlæg celler (merge)',
             splitCells: 'Opdel celler',
             HorizontalSplit: 'Opdel horisontalt',
-            VerticalSplit: 'Opdel vertikalt'
+            VerticalSplit: 'Opdel vertikalt',
+            style: 'Stil'
         },
         menu: {
             spaced: 'Brev Afstand',

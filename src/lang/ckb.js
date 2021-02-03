@@ -71,6 +71,7 @@
             tag_blockquote: 'ده‌ق',
             tag_pre: 'كۆد',
             template: 'قاڵب',
+            layout: 'نسق',
             lineHeight: 'بڵندی دێر',
             paragraphStyle: 'ستایلی په‌ره‌گراف',
             textStyle: 'ستایلی نوسین',
@@ -152,7 +153,8 @@
             mergeCells: 'خانه‌كان تێكه‌ڵبكه‌',
             splitCells: 'خانه‌كان لێك جیابكه‌وه‌',
             HorizontalSplit: 'جیاكردنه‌وه‌ی ئاسۆیی',
-            VerticalSplit: 'جیاكردنه‌وه‌ی ستونی'
+            VerticalSplit: 'جیاكردنه‌وه‌ی ستونی',
+            style: 'أسلوب'
         },
         menu: {
             spaced: 'بۆشای هه‌بێت',

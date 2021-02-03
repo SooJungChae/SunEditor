@@ -184,9 +184,9 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
         currentControllerTarget: null,
 
         /**
-         * @description The file component object of current selected file tag (getFileComponent)
+         * @description The component object of current selected component tag (getComponent)
          */
-        currentFileComponentInfo: null,
+        currentComponentInfo: null,
 
         /**
          * @description An array of buttons whose class name is not "se-code-view-enabled"
@@ -371,12 +371,12 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
          * @private
          */
         _fileInfoPluginsReset: null,
-
+        
         /**
-         * @description Variables for file component management
+         * @description Variables for component management
          * @private
          */
-        _fileManager: {
+        _componentManager: {
             tags: null,
             regExp: null,
             queryString: null,
@@ -695,7 +695,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
                 }
                 if (!util.hasClass(arg, 'se-controller')) {
                     this.currentControllerTarget = arg;
-                    this.currentFileComponentInfo = this.getFileComponent(arg);
+                    this.currentComponentInfo = this.getComponent(arg);
                     continue;
                 }
                 if (arg.style) arg.style.display = 'block';
@@ -724,13 +724,13 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
                 }
             }
             
-            if (this._fileManager.pluginRegExp.test(this.currentControllerName) && e && e.type === 'keydown' && e.keyCode !== 27) return;
+            if (this._componentManager.pluginRegExp.test(this.currentControllerName) && e && e.type === 'keydown' && e.keyCode !== 27) return;
             context.element.lineBreaker_t.style.display = context.element.lineBreaker_b.style.display = 'none';
             this._variable._lineBreakComp = null;
 
             this.currentControllerName = '';
             this.currentControllerTarget = null;
-            this.currentFileComponentInfo = null;
+            this.currentComponentInfo = null;
             this.effectNode = null;
             if (!this._bindControllersOff) return;
 
@@ -873,9 +873,9 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
         focusEdge: function (focusEl) {
             if (!focusEl) focusEl = context.element.wysiwyg.lastElementChild;
 
-            const fileComponentInfo = this.getFileComponent(focusEl);
-            if (fileComponentInfo) {
-                this.selectComponent(fileComponentInfo.target, fileComponentInfo.pluginName);
+            const componentInfo = this.getComponent(focusEl);
+            if (componentInfo) {
+                this.selectComponent(componentInfo.target, componentInfo.pluginName);
             } else if (focusEl) {
                 focusEl = util.getChildElement(focusEl, function (current) { return current.childNodes.length === 0 || current.nodeType === 3; }, true);
                 if (!focusEl) this.nativeFocus();
@@ -1093,7 +1093,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
          */
         _selectionVoid: function (range) {
             const comm = range.commonAncestorContainer;
-            return (util.isWysiwygDiv(range.startContainer) && util.isWysiwygDiv(range.endContainer)) || /FIGURE/i.test(comm.nodeName) || this._fileManager.regExp.test(comm.nodeName) || util.isMediaComponent(comm);
+            return (util.isWysiwygDiv(range.startContainer) && util.isWysiwygDiv(range.endContainer)) || /FIGURE/i.test(comm.nodeName) || this._componentManager.regExp.test(comm.nodeName) || util.isMediaComponent(comm);
         },
 
         /**
@@ -1271,12 +1271,12 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
          */
         getSelectedElementsAndComponents: function (removeDuplicate) {
             const commonCon = this.getRange().commonAncestorContainer;
-            const myComponent = util.getParentElement(commonCon, util.isComponent);
+            const myComponent = util.getParentElement(commonCon, util.isFormatComponent);
             const selectedLines = util.isTable(commonCon) ? 
                 this.getSelectedElements(null) :
                 this.getSelectedElements(function (current) {
-                    const component = this.getParentElement(current, this.isComponent);
-                    return (this.isFormatElement(current) && (!component || component === myComponent)) || (this.isComponent(current) && !this.getFormatElement(current));
+                    const component = this.getParentElement(current, this.isFormatComponent);
+                    return (this.isFormatElement(current) && (!component || component === myComponent)) || (this.isFormatComponent(current) && !this.getFormatElement(current));
                 }.bind(util));
             
             if (removeDuplicate) {
@@ -1402,9 +1402,9 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             this.setRange(element, 0, element, 0);
 
             if (!notSelect) {
-                const fileComponentInfo = this.getFileComponent(element);
-                if (fileComponentInfo) {
-                    this.selectComponent(fileComponentInfo.target, fileComponentInfo.pluginName);
+                const componentInfo = this.getComponent(element);
+                if (componentInfo) {
+                    this.selectComponent(componentInfo.target, componentInfo.pluginName);
                 } else if (oNode) {
                     oNode = util.getEdgeChildNodes(oNode, null).sc || oNode;
                     this.setRange(oNode, 0, oNode, 0);
@@ -1418,24 +1418,24 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
         },
 
         /**
-         * @description Gets the file component and that plugin name
+         * @description Gets the component and that plugin name
          * return: {target, component, pluginName} | null
          * @param {Element} element Target element (figure tag, component div, file tag)
          * @returns {Object|null}
          */
-        getFileComponent: function (element) {
-            if (!this._fileManager.queryString || !element) return null;
+        getComponent: function (element) {
+            if (!this._componentManager.queryString || !element) return null;
 
             let target, pluginName;
             if (/^FIGURE$/i.test(element.nodeName) || /se-component/.test(element.className)) {
-                target = element.querySelector(this._fileManager.queryString);
+                target = element.querySelector(this._componentManager.queryString);
             }
-            if (!target && element.nodeName && this._fileManager.regExp.test(element.nodeName)) {
+            if (!target && element.nodeName && this._componentManager.regExp.test(element.nodeName)) {
                 target = element;
             }
 
             if (target) {
-                pluginName = this._fileManager.pluginMap[target.nodeName.toLowerCase()];
+                pluginName = this._componentManager.pluginMap[target.nodeName.toLowerCase()];
                 if (pluginName) {
                     return {
                         target: target,
@@ -1472,7 +1472,9 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
         _setComponentLineBreaker: function (element) {
             // line breaker
             this._lineBreaker.style.display = 'none';
-            const container = util.getParentElement(element, util.isComponent);
+            const container = util.getParentElement(element, util.isFormatComponent);
+            if (!container) return;
+
             const t_style = context.element.lineBreaker_t.style;
             const b_style = context.element.lineBreaker_b.style;
             const target = this.context.resizing.resizeContainer.style.display === 'block' ? this.context.resizing.resizeContainer : element;
@@ -1524,7 +1526,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             }
 
             const freeFormat = util.getFreeFormatElement(this.getSelectionNode(), null);
-            const isFormats = (!freeFormat && (util.isFormatElement(oNode) || util.isRangeFormatElement(oNode))) || util.isComponent(oNode);
+            const isFormats = (!freeFormat && (util.isFormatElement(oNode) || util.isRangeFormatElement(oNode))) || util.isFormatComponent(oNode);
 
             if (!afterNode && isFormats) {
                 const range = this.getRange();
@@ -1637,7 +1639,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
 
             // --- insert node ---
             try {
-                if (util.isFormatElement(oNode) || util.isRangeFormatElement(oNode) || (!util.isListCell(parentNode) && util.isComponent(oNode))) {
+                if (util.isFormatElement(oNode) || util.isRangeFormatElement(oNode) || (!util.isListCell(parentNode) && util.isFormatComponent(oNode))) {
                     const oldParent = parentNode;
                     if (util.isList(afterNode)) {
                         parentNode = afterNode;
@@ -1667,7 +1669,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
                     oNode = this._setIntoFreeFormat(oNode);
                 }
 
-                if (!util.isComponent(oNode)) {
+                if (!util.isFormatComponent(oNode)) {
                     let offset = 1;
                     if (oNode.nodeType === 3) {
                         const previous = oNode.previousSibling;
@@ -1886,7 +1888,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             
             if (!util.isWysiwygDiv(container) && container.childNodes.length === 0) {
                 const rc = util.removeItemAllParents(container, function (current) {
-                    if (this.isComponent(current)) return false;
+                    if (this.isFormatComponent(current)) return false;
                     const text = current.textContent;
                     return text.length === 0 || /^(\n|\u200B)+$/.test(text);
                 }.bind(util), null);
@@ -2317,7 +2319,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             let listLast = false;
             let first = null;
             let last = null;
-            const passComponent = function (current) { return !this.isComponent(current); }.bind(util);
+            const passComponent = function (current) { return !this.isFormatComponent(current); }.bind(util);
 
             for (let i = 0, len = selectedFormats.length, r, o, lastIndex, isList; i < len; i++) {
                 lastIndex = i === len - 1;
@@ -4553,7 +4555,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             // element
             if (node.nodeType === 1) {
                 if (util._disallowedTags(node)) return '';
-                if (!requireFormat || (util.isFormatElement(node) || util.isRangeFormatElement(node) || util.isComponent(node) || util.isMedia(node) || (util.isAnchor(node) && util.isMedia(node.firstElementChild)))) {
+                if (!requireFormat || (util.isFormatElement(node) || util.isRangeFormatElement(node) || util.isFormatComponent(node) || util.isMedia(node) || (util.isAnchor(node) && util.isMedia(node.firstElementChild)))) {
                     return node.outerHTML;
                 } else {
                     return '<' + defaultTag + '>' + node.outerHTML + '</' + defaultTag + '>';
@@ -5049,7 +5051,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             // caching buttons
             this._cachingButtons();
 
-            // file components
+            // components
             this._fileInfoPluginsCheck = [];
             this._fileInfoPluginsReset = [];
 
@@ -5059,43 +5061,50 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
 
             // Command and file plugins registration
             this.activePlugins = [];
-            this._fileManager.tags = [];
-            this._fileManager.pluginMap = {};
+            this._componentManager.tags = [];
+            this._componentManager.pluginMap = {};
 
-            let filePluginRegExp = [];
+            let componentPluginRegExp = [];
             let plugin, button;
             for (let key in plugins) {
                 if (!util.hasOwn(plugins, key)) continue;
                 plugin = plugins[key];
                 button = pluginCallButtons[key];
+
+                // active method
                 if (plugin.active && button) {
                     this.callPlugin(key, null, button);
                 }
+                // component
                 if (typeof plugin.checkFileInfo === 'function' && typeof plugin.resetFileInfo === 'function') {
                     this.callPlugin(key, null, button);
                     this._fileInfoPluginsCheck.push(plugin.checkFileInfo.bind(this));
                     this._fileInfoPluginsReset.push(plugin.resetFileInfo.bind(this));
                 }
-                if (_w.Array.isArray(plugin.fileTags)) {
-                    const fileTags = plugin.fileTags;
+                // component
+                if (_w.Array.isArray(plugin.componentTags)) {
+                    const componentTags = plugin.componentTags;
                     this.callPlugin(key, null, button);
-                    this._fileManager.tags = this._fileManager.tags.concat(fileTags);
-                    filePluginRegExp.push(key);
-                    for (let tag = 0, tLen = fileTags.length; tag < tLen; tag++) {
-                        this._fileManager.pluginMap[fileTags[tag].toLowerCase()] = key;
+                    this._componentManager.tags = this._componentManager.tags.concat(componentTags);
+                    componentPluginRegExp.push(key);
+                    for (let tag = 0, tLen = componentTags.length; tag < tLen; tag++) {
+                        this._componentManager.pluginMap[componentTags[tag].toLowerCase()] = key;
                     }
+                    continue;
                 }
+                // managed tags
                 if (plugin.managedTags) {
                     const info = plugin.managedTags();
                     managedClass.push('.' + info.className);
                     this.managedTagsInfo.map[info.className] = info.method.bind(this);
+                    continue;
                 }
             }
 
             this.managedTagsInfo.query = managedClass.toString();
-            this._fileManager.queryString = this._fileManager.tags.join(',');
-            this._fileManager.regExp = new wRegExp('^(' +  this._fileManager.tags.join('|') + ')$', 'i');
-            this._fileManager.pluginRegExp = new wRegExp('^(' +  (filePluginRegExp.length === 0 ? 'undefined' : filePluginRegExp.join('|')) + ')$', 'i');
+            this._componentManager.queryString = this._componentManager.tags.join(',');
+            this._componentManager.regExp = new wRegExp('^(' +  this._componentManager.tags.join('|') + ')$', 'i');
+            this._componentManager.pluginRegExp = new wRegExp('^(' +  (componentPluginRegExp.length === 0 ? 'undefined' : componentPluginRegExp.join('|')) + ')$', 'i');
             
             // cache editor's element
             this._variable._originCssText = context.element.topArea.style.cssText;
@@ -5212,7 +5221,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
          * @private
          */
         _setDefaultFormat: function (formatName) {
-            if (this._fileManager.pluginRegExp.test(this.currentControllerName)) return;
+            if (this._componentManager.pluginRegExp.test(this.currentControllerName)) return;
 
             const range = this.getRange();
             const commonCon = range.commonAncestorContainer;
@@ -5220,9 +5229,9 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             const rangeEl = util.getRangeFormatElement(commonCon, null);
             let focusNode, offset, format;
 
-            const fileComponent = util.getParentElement(commonCon, util.isComponent);
+            const fileComponent = util.getParentElement(commonCon, util.isFormatComponent);
             if (fileComponent && !util.isTable(fileComponent)) return;
-            if((util.isRangeFormatElement(startCon) || util.isWysiwygDiv(startCon)) && util.isComponent(startCon.childNodes[range.startOffset])) return;
+            if((util.isRangeFormatElement(startCon) || util.isWysiwygDiv(startCon)) && util.isFormatComponent(startCon.childNodes[range.startOffset])) return;
 
             if (rangeEl) {
                 format = util.createElement(formatName || options.defaultTag);
@@ -5599,10 +5608,10 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             const targetElement = e.target;
             if (util.isNonEditable(context.element.wysiwyg)) return;
 
-            const fileComponentInfo = core.getFileComponent(targetElement);
-            if (fileComponentInfo) {
+            const componentInfo = core.getComponent(targetElement);
+            if (componentInfo) {
                 e.preventDefault();
-                core.selectComponent(fileComponentInfo.target, fileComponentInfo.pluginName);
+                core.selectComponent(componentInfo.target, componentInfo.pluginName);
                 return;
             }
 
@@ -5884,7 +5893,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             if (!siblingNode) {
                 siblingNode = util.getFormatElement(container);
                 siblingNode = siblingNode ? siblingNode[siblingKey] : null;
-                if (siblingNode && !util.isComponent(siblingNode)) siblingNode = siblingKey === 'previousSibling' ? siblingNode.firstElementChild : siblingNode.lastElementChild;
+                if (siblingNode && !util.isFormatComponent(siblingNode)) siblingNode = siblingKey === 'previousSibling' ? siblingNode.firstElementChild : siblingNode.lastElementChild;
                 else return null;
             }
 
@@ -5919,17 +5928,17 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             let selectionNode = core.getSelectionNode();
             const range = core.getRange();
             const selectRange = !range.collapsed || range.startContainer !== range.endContainer;
-            const fileComponentName = core._fileManager.pluginRegExp.test(core.currentControllerName) ? core.currentControllerName : '';
+            const currentComponentName = core._componentManager.pluginRegExp.test(core.currentControllerName) ? core.currentControllerName : '';
             let formatEl = util.getFormatElement(selectionNode, null) || selectionNode;
             let rangeEl = util.getRangeFormatElement(formatEl, null);
 
             switch (keyCode) {
                 case 8: /** backspace key */
                     if (!selectRange) {
-                        if (fileComponentName) {
+                        if (currentComponentName) {
                             e.preventDefault();
                             e.stopPropagation();
-                            core.plugins[fileComponentName].destroy.call(core);
+                            core.plugins[currentComponentName].destroy.call(core);
                             break;
                         }
                     }
@@ -6094,15 +6103,15 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
                     if (!selectRange && formatEl && (range.startOffset === 0 || (selectionNode === formatEl ? !!formatEl.childNodes[range.startOffset] : false))) {
                         const sel = selectionNode === formatEl ? formatEl.childNodes[range.startOffset] : selectionNode;
                         const prev = formatEl.previousSibling;
-                        // select file component
+                        // select component
                         const ignoreZWS = (commonCon.nodeType === 3 || util.isBreak(commonCon)) && !commonCon.previousSibling && range.startOffset === 0;
                         if (!sel.previousSibling && (util.isComponent(commonCon.previousSibling) || (ignoreZWS && util.isComponent(prev)))) {
-                            const fileComponentInfo = core.getFileComponent(prev);
-                            if (fileComponentInfo) {
+                            const componentInfo = core.getComponent(prev);
+                            if (componentInfo) {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 if (formatEl.textContent.length === 0) util.removeItem(formatEl);
-                                if (core.selectComponent(fileComponentInfo.target, fileComponentInfo.pluginName) === false) core.blur();
+                                if (core.selectComponent(componentInfo.target, componentInfo.pluginName) === false) core.blur();
                             } else if (util.isComponent(prev)) {
                                 e.preventDefault();
                                 e.stopPropagation();
@@ -6121,10 +6130,10 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
 
                     break;
                 case 46: /** delete key */
-                    if (fileComponentName) {
+                    if (currentComponentName) {
                         e.preventDefault();
                         e.stopPropagation();
-                        core.plugins[fileComponentName].destroy.call(core);
+                        core.plugins[currentComponentName].destroy.call(core);
                         break;
                     }
 
@@ -6163,11 +6172,11 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
                                 }
                             }
 
-                            // select file component
-                            const fileComponentInfo = core.getFileComponent(nextEl);
-                            if (fileComponentInfo) {
+                            // select component
+                            const componentInfo = core.getComponent(nextEl);
+                            if (componentInfo) {
                                 e.stopPropagation();
-                                if (core.selectComponent(fileComponentInfo.target, fileComponentInfo.pluginName) === false) core.blur();
+                                if (core.selectComponent(componentInfo.target, componentInfo.pluginName) === false) core.blur();
                             } else if (util.isComponent(nextEl)) {
                                 e.stopPropagation();
                                 util.removeItem(nextEl);
@@ -6226,7 +6235,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
 
                     break;
                 case 9: /** tab key */
-                    if (fileComponentName || options.tabDisable) break;
+                    if (currentComponentName || options.tabDisable) break;
                     e.preventDefault();
                     if (ctrl || alt || util.isWysiwygDiv(selectionNode)) break;
 
@@ -6470,13 +6479,14 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
                         core.setRange(formatEl, 0, formatEl, 0);
                     }
 
-                    if (fileComponentName) {
+                    if (currentComponentName) {
                         e.preventDefault();
                         e.stopPropagation();
-                        const compContext = context[fileComponentName];
+                        const compContext = context[currentComponentName];
                         const container = compContext._container;
-                        const sibling = container.previousElementSibling || container.nextElementSibling;
+                        if (!container) break;
 
+                        const sibling = container.previousElementSibling || container.nextElementSibling;
                         let newEl = null;
                         if (util.isListCell(container.parentNode)) {
                             newEl = util.createElement('BR');
@@ -6486,15 +6496,14 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
                         }
 
                         container.parentNode.insertBefore(newEl, container);
-                        
-                        core.callPlugin(fileComponentName, function () {
-                            if (core.selectComponent(compContext._element, fileComponentName) === false) core.blur();
+                        core.callPlugin(currentComponentName, function () {
+                            if (core.selectComponent(compContext._element, currentComponentName) === false) core.blur();
                         }, null);
                     }
                     
                     break;
                 case 27:
-                    if (fileComponentName) {
+                    if (currentComponentName) {
                         e.preventDefault();
                         e.stopPropagation();
                         core.controllersOff();
@@ -6800,11 +6809,11 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             const eIsCell = util.isCell(eCell);
             if (((sIsCell && !sCell.previousElementSibling && !sCell.parentElement.previousElementSibling) || (eIsCell && !eCell.nextElementSibling && !eCell.parentElement.nextElementSibling)) && sCell !== eCell) {
                 if (!sIsCell) {
-                    util.removeItem(util.getParentElement(eCell, util.isComponent));
+                    util.removeItem(util.getParentElement(eCell, util.isFormatComponent));
                 } else if (!eIsCell) {
-                    util.removeItem(util.getParentElement(sCell, util.isComponent));
+                    util.removeItem(util.getParentElement(sCell, util.isFormatComponent));
                 } else {
-                    util.removeItem(util.getParentElement(sCell, util.isComponent));
+                    util.removeItem(util.getParentElement(sCell, util.isFormatComponent));
                     core.nativeFocus();
                     return true;
                 }
@@ -6839,7 +6848,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
                 return false;
             }
 
-            const info = core.currentFileComponentInfo;
+            const info = core.currentComponentInfo;
             if (info && !util.isIE) {
                 event._setClipboardComponent(e, info, clipboardData);
                 util.addClass(info.component, 'se-component-copy');
@@ -6858,7 +6867,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
                 return false;
             }
 
-            const info = core.currentFileComponentInfo;
+            const info = core.currentComponentInfo;
             if (info && !util.isIE) {
                 event._setClipboardComponent(e, info, clipboardData);
                 util.removeItem(info.component);
@@ -6983,7 +6992,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
 
         onMouseMove_wysiwyg: function (e) {
             if (core.isDisabled) return;
-            const component = util.getParentElement(e.target, util.isComponent);
+            const component = util.getParentElement(e.target, util.isFormatComponent);
             const lineBreakerStyle = core._lineBreaker.style;
             
             if (component && !core.currentControllerName) {
@@ -7701,7 +7710,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
                     core.execCommand('insertHTML', false, html);
                 }
             } else {
-                if (util.isComponent(html)) {
+                if (util.isFormatComponent(html)) {
                     core.insertComponent(html, false, checkCharCount, false);
                 } else {
                     let afterNode = null;
@@ -7730,8 +7739,9 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
         /**
          * @description Add contents to the suneditor
          * @param {String} contents Contents to Input
+         * @param {Element|undefined} afterElement When it is a format element, it is inserted after the afterElement
          */
-        appendContents: function (contents) {
+        appendContents: function (contents, afterElement) {
             const convertValue = core.convertContentsForEditor(contents);
             
             if (!core._variable.isCodeView) {
@@ -7741,7 +7751,8 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
                 const wysiwyg = context.element.wysiwyg;
                 const children = temp.children;
                 for (let i = 0, len = children.length; i < len; i++) {
-                    wysiwyg.appendChild(children[i]);
+                    wysiwyg.insertBefore(children[i], (afterElement ? afterElement.nextElementSibling : null));
+                    afterElement = children[i];
                 }
             } else {
                 core._setCodeView(core._getCodeView() + '\n' + core.convertHTMLForCodeView(convertValue));

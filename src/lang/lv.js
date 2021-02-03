@@ -71,6 +71,7 @@
             tag_blockquote: 'Citāts',
             tag_pre: 'Kods',
             template: 'Veidne',
+            layout: 'Izkārtojums',
             lineHeight: 'Līnijas augstums',
             paragraphStyle: 'Paragrāfa stils',
             textStyle: 'Teksta stils',
@@ -87,7 +88,7 @@
                 bookmark: 'Grāmatzīme'
             },
             mathBox: {
-                title: 'Matemātika',
+                title: 'Ievietot matemātika',
                 inputLabel: 'Matemātiskā notācija',
                 fontSizeLabel: 'Fonta lielums',
                 previewLabel: 'Priekšskatījums'
@@ -152,7 +153,8 @@
             mergeCells: 'Apvienot šūnas',
             splitCells: 'Sadalīt šūnas',
             HorizontalSplit: 'Horizontāls sadalījums',
-            VerticalSplit: 'Vertikāls sadalījums'
+            VerticalSplit: 'Vertikāls sadalījums',
+            style: 'Stils'
         },
         menu: {
             spaced: 'Ar atstarpi',

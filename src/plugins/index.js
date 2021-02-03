@@ -15,6 +15,7 @@ import table from './submenu/table';
 import formatBlock from './submenu/formatBlock';
 import lineHeight from './submenu/lineHeight';
 import template from './submenu/template';
+import layout from './submenu/layout';
 import paragraphStyle from './submenu/paragraphStyle';
 import textStyle from './submenu/textStyle';
 
@@ -28,5 +29,5 @@ import math from './dialog/math';
 // file browser
 import imageGallery from './fileBrowser/imageGallery';
 
-export { blockquote, align, font, fontSize, fontColor, hiliteColor, horizontalRule, list, table, formatBlock, lineHeight, template, paragraphStyle, textStyle, link, image, video, audio, math, imageGallery };
-export default { blockquote, align, font, fontSize, fontColor, hiliteColor, horizontalRule, list, table, formatBlock, lineHeight, template, paragraphStyle, textStyle, link, image, video, audio, math, imageGallery };
+export { blockquote, align, font, fontSize, fontColor, hiliteColor, horizontalRule, list, table, formatBlock, lineHeight, template, layout, paragraphStyle, textStyle, link, image, video, audio, math, imageGallery };
+export default { blockquote, align, font, fontSize, fontColor, hiliteColor, horizontalRule, list, table, formatBlock, lineHeight, template, layout, paragraphStyle, textStyle, link, image, video, audio, math, imageGallery };

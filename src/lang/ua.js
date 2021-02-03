@@ -71,6 +71,7 @@
             tag_blockquote: "Цитата",
             tag_pre: "Код",
             template: "Шаблон",
+            layout: 'Макет',
             lineHeight: "Висота лінії",
             paragraphStyle: "Стиль абзацу",
             textStyle: "Стиль тексту",
@@ -152,7 +153,8 @@
             mergeCells: "Об'єднати клітинки",
             splitCells: "Розділити клітинку",
             HorizontalSplit: "Розділити горизонтально",
-            VerticalSplit: "Розділити вертикально"
+            VerticalSplit: "Розділити вертикально",
+            style: 'Стиль'
         },
         menu: {
             spaced: "Інтервал",

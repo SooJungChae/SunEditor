@@ -323,7 +323,7 @@ const util = {
      * @returns {Boolean}
      */
     isRangeFormatElement: function (element) {
-        return element && element.nodeType === 1 && (/^(BLOCKQUOTE|OL|UL|FIGCAPTION|TABLE|THEAD|TBODY|TR|TH|TD)$/i.test(element.nodeName) || this.hasClass(element, '(\\s|^)__se__format__range_.+(\\s|$)'));
+        return element && element.nodeType === 1 && (/^(BLOCKQUOTE|OL|UL|FIGCAPTION|TABLE|CAPTION|THEAD|TBODY|TR|TH|TD)$/i.test(element.nodeName) || this.hasClass(element, '(\\s|^)__se__format__range_.+(\\s|$)'));
     },
 
     /**
@@ -371,6 +371,14 @@ const util = {
      */
     isComponent: function (element) {
         return element && (/se-component/.test(element.className) || /^(TABLE|HR)$/.test(element.nodeName));
+    },
+
+    isLineComponent: function (element) {
+        return element && (/se-component-line/.test(element.className) || /^(BUTTON|SELECT)$/.test(element.nodeName));
+    },
+
+    isFormatComponent: function (element) {
+        return element && (/se-component/.test(element.className) || /^(TABLE|HR)$/.test(element.nodeName)) && !(/se-component-line/.test(element.className) || /^(BUTTON|SELECT)$/.test(element.nodeName));
     },
 
     /**
@@ -729,7 +737,7 @@ const util = {
      * @returns {Boolean}
      */
     isTable: function (node) {
-        return node && /^(TABLE|THEAD|TBODY|TR|TH|TD)$/i.test(typeof node === 'string' ? node : node.nodeName);
+        return node && /^(TABLE|CAPTION|THEAD|TBODY|TR|TH|TD)$/i.test(typeof node === 'string' ? node : node.nodeName);
     },
 
     /**
@@ -1714,16 +1722,16 @@ const util = {
             // table cells
             if (this.isCell(current)) {
                 const fel = current.firstElementChild;
-                if (!this.isFormatElement(fel) && !this.isRangeFormatElement(fel) && !this.isComponent(fel)) {
+                if (!this.isFormatElement(fel) && !this.isRangeFormatElement(fel) && !this.isFormatComponent(fel)) {
                     withoutFormatCells.push(current);
                     return false;
                 }
             }
 
             const result = current.parentNode !== documentFragment &&
-             (this.isFormatElement(current) || this.isComponent(current) || this.isList(current)) &&
+             (this.isFormatElement(current) || this.isFormatComponent(current) || this.isList(current)) &&
              !this.isRangeFormatElement(current.parentNode) && !this.isListCell(current.parentNode) &&
-             !this.getParentElement(current, this.isComponent) && nrtag;
+             !this.getParentElement(current, this.isFormatComponent) && nrtag;
 
             // @v3
             //  if (!result) {

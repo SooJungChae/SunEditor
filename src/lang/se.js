@@ -74,6 +74,7 @@
             tag_blockquote: 'Citer',
             tag_pre: 'Kod',
             template: 'Mall',
+            layout: 'Layout',
             lineHeight: 'Linjehöjd',
             paragraphStyle: 'Stil på stycke',
             textStyle: 'Textstil',
@@ -155,7 +156,8 @@
             mergeCells: 'Sammanfoga celler (merge)',
             splitCells: 'Separera celler',
             HorizontalSplit: 'Separera horisontalt',
-            VerticalSplit: 'Separera vertikalt'
+            VerticalSplit: 'Separera vertikalt',
+            style: 'Stil'
         },
         menu: {
             spaced: 'Avstånd',

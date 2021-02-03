@@ -71,6 +71,7 @@
             tag_blockquote: 'Цитата',
             tag_pre: 'Код',
             template: 'Шаблон',
+            layout: 'Макет',
             lineHeight: 'Высота линии',
             paragraphStyle: 'Стиль абзаца',
             textStyle: 'Стиль текста',
@@ -87,7 +88,7 @@
                 bookmark: 'Закладка'
             },
             mathBox: {
-                title: 'математический',
+                title: 'Вставить математический',
                 inputLabel: 'Математическая запись',
                 fontSizeLabel: 'Кегль',
                 previewLabel: 'Предварительный просмотр'
@@ -152,7 +153,8 @@
             mergeCells: 'Объединить ячейки',
             splitCells: 'Разделить ячейку',
             HorizontalSplit: 'Разделить горизонтально',
-            VerticalSplit: 'Разделить вертикально'
+            VerticalSplit: 'Разделить вертикально',
+            style: 'Style'
         },
         menu: {
             spaced: 'интервал',

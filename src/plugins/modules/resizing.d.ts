@@ -21,6 +21,8 @@ import { Module } from '../Module';
     _resizeDotHide: !core.options.imageHeightShow,
     _rotation: core.options.imageRotation,
     _onlyPercentage: core.options.imageSizeOnlyPercentage,
+    _mirrorHide: false,
+    _alignHide: false,
     _ratio: false,
     _ratioX: 1,
     _ratioY: 1

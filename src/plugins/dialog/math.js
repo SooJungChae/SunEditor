@@ -9,7 +9,7 @@ export default {
         core.addModule([dialog]);
 
         const context = core.context;
-        context.math = {
+        const contextMath = context.math = {
             focusElement: null, // @Override dialog // This element has focus when the dialog is opened.
             previewElement: null,
             fontSizeElement: null,
@@ -18,18 +18,17 @@ export default {
 
         /** math dialog */
         let math_dialog = this.setDialog(core);
-        context.math.modal = math_dialog;
-        context.math.focusElement = math_dialog.querySelector('.se-math-exp');
-        context.math.previewElement = math_dialog.querySelector('.se-math-preview');
-        context.math.fontSizeElement = math_dialog.querySelector('.se-math-size');
-        context.math.focusElement.addEventListener('keyup', this._renderMathExp.bind(core, context.math), false);
-        context.math.focusElement.addEventListener('change', this._renderMathExp.bind(core, context.math), false);
-        context.math.fontSizeElement.addEventListener('change', function (e) { this.fontSize = e.target.value; }.bind(context.math.previewElement.style), false);
+        contextMath.modal = math_dialog;
+        contextMath.focusElement = math_dialog.querySelector('.se-math-exp');
+        contextMath.previewElement = math_dialog.querySelector('.se-math-preview');
+        contextMath.fontSizeElement = math_dialog.querySelector('.se-math-size');
+        contextMath.focusElement.addEventListener('keyup', this._renderMathExp.bind(core, contextMath), false);
+        contextMath.focusElement.addEventListener('change', this._renderMathExp.bind(core, contextMath), false);
+        contextMath.fontSizeElement.addEventListener('change', function (e) { this.fontSize = e.target.value; }.bind(contextMath.previewElement.style), false);
 
         /** math controller */
         let math_controller = this.setController_MathButton(core);
-        context.math.mathController = math_controller;
-        context.math._mathExp = null;
+        contextMath.mathController = math_controller;
 
         /** add event listeners */
         math_dialog.querySelector('form').addEventListener('submit', this.submit.bind(core), false);
@@ -104,8 +103,7 @@ export default {
                     '<span class="se-tooltip-inner"><span class="se-tooltip-text">' + lang.controller.remove + '</span></span>' +
                 '</button>' +
             '</div>' +
-        '</div>' +
-        '';
+        '</div>';
 
         return math_btn;
     },
@@ -226,7 +224,9 @@ export default {
             const contextMath = this.context.math;
             if (contextMath._mathExp) {
                 const exp = this.util.HTMLDecoder(contextMath._mathExp.getAttribute('data-exp'));
-                const fontSize = contextMath._mathExp.getAttribute('data-font-size') || '1em';
+                const fontSize = contextMath._mathExp.style.fontSize || contextMath._mathExp.getAttribute('data-font-size') || '1em';
+                contextMath._mathExp.setAttribute('data-font-size', fontSize);
+
                 this.context.dialog.updateModal = true;
                 contextMath.focusElement.value = exp;
                 contextMath.fontSizeElement.value = fontSize;

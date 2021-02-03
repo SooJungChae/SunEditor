@@ -117,9 +117,9 @@ interface Core {
     currentControllerTarget: Element;
 
     /**
-     * @description The file component object of current selected file tag (getFileComponent(): {target, component, pluginName})
+     * @description The file component object of current selected component tag (getComponent(): {target, component, pluginName})
      */
-    currentFileComponentInfo: seledtedFileInfo;
+    currentFileComponentInfo: seledtedComponentInfo;
 
     /**
      * @description An array of buttons whose class name is not "se-code-view-enabled"
@@ -388,7 +388,7 @@ interface Core {
      * @param element Target element (figure tag, component div, file tag)
      * @returns
      */
-    getFileComponent(element: Element): seledtedFileInfo | null;
+    getComponent(element: Element): seledtedComponentInfo | null;
 
     /**
      * @description The component(image, video) is selected and the resizing module is called.
@@ -856,7 +856,7 @@ export default class SunEditor {
      * You cannot set a new plugin for the button.
      * @param buttonList Button list 
      */
-    setToolbarButtons(buttonList: any[]): void;
+    setToolbarButtons(buttonList: any): void;
 
     /**
      * @description Add or reset option property
@@ -969,8 +969,9 @@ export default class SunEditor {
     /**
      * @description Add contents to the suneditor
      * @param contents Contents to Input
+     * @param beforeElement When it is a format element, it is inserted after the beforeElement.
      */
-    appendContents(contents: string): void;
+    appendContents(contents: string, beforeElement?: Element): void;
 
     /**
      * @description Disable the suneditor

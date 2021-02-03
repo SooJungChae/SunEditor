@@ -71,6 +71,7 @@
             tag_blockquote: 'Quote',
             tag_pre: 'Code',
             template: 'Template',
+            layout: 'Layout',
             lineHeight: 'Line height',
             paragraphStyle: 'Paragraph style',
             textStyle: 'Text style',
@@ -79,7 +80,7 @@
         },
         dialogBox: {
             linkBox: {
-                title: 'Insert Link',
+                title: 'Insert link',
                 url: 'URL to link',
                 text: 'Text to display',
                 newWindowCheck: 'Open in new window',
@@ -87,7 +88,7 @@
                 bookmark: 'Bookmark'
             },
             mathBox: {
-                title: 'Math',
+                title: 'Insert math',
                 inputLabel: 'Mathematical Notation',
                 fontSizeLabel: 'Font Size',
                 previewLabel: 'Preview'
@@ -99,12 +100,12 @@
                 altText: 'Alternative text'
             },
             videoBox: {
-                title: 'Insert Video',
+                title: 'Insert video',
                 file: 'Select from files',
                 url: 'Media embed URL, YouTube/Vimeo'
             },
             audioBox: {
-                title: 'Insert Audio',
+                title: 'Insert audio',
                 file: 'Select from files',
                 url: 'Audio URL'
             },
@@ -152,7 +153,8 @@
             mergeCells: 'Merge cells',
             splitCells: 'Split Cells',
             HorizontalSplit: 'Horizontal split',
-            VerticalSplit: 'Vertical split'
+            VerticalSplit: 'Vertical split',
+            style: 'Style'
         },
         menu: {
             spaced: 'Spaced',

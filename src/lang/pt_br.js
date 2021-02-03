@@ -72,6 +72,7 @@
             tag_blockquote: 'Citar',
             tag_pre: 'Código',
             template: 'Modelo',
+            layout: 'Layout',
             lineHeight: 'Altura da linha',
             paragraphStyle: 'Estilo do parágrafo',
             textStyle: 'Estilo do texto',
@@ -88,7 +89,7 @@
                 bookmark: 'marca páginas'
             },
             mathBox: {
-                title: 'Matemática',
+                title: 'Inserir matemática',
                 inputLabel: 'Notação matemática',
                 fontSizeLabel: 'Tamanho',
                 previewLabel: 'Prever'
@@ -153,7 +154,8 @@
             mergeCells: 'Mesclar células',
             splitCells: 'Dividir células',
             HorizontalSplit: 'Divisão horizontal',
-            VerticalSplit: 'Divisão vertical'
+            VerticalSplit: 'Divisão vertical',
+            style: 'Estilo'
         },
         menu: {
             spaced: 'Espaçado',

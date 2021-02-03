@@ -71,6 +71,7 @@
             tag_blockquote: 'Cytat',
             tag_pre: 'Kod',
             template: 'Szablon',
+            layout: 'Układ',
             lineHeight: 'Odstęp między wierszami',
             paragraphStyle: 'Styl akapitu',
             textStyle: 'Styl tekstu',
@@ -87,7 +88,7 @@
                 bookmark: 'Zakładka'
             },
             mathBox: {
-                title: 'Matematyczne',
+                title: 'Wstaw matematyczne',
                 inputLabel: 'Zapis matematyczny',
                 fontSizeLabel: 'Rozmiar czcionki',
                 previewLabel: 'Podgląd'
@@ -152,7 +153,8 @@
             mergeCells: 'Scal komórki',
             splitCells: 'Podziel komórki',
             HorizontalSplit: 'Podział poziomy',
-            VerticalSplit: 'Podział pionowy'
+            VerticalSplit: 'Podział pionowy',
+            style: 'Styl'
         },
         menu: {
             spaced: 'Rozstawiony',

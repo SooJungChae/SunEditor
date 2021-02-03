@@ -45,6 +45,8 @@
             _resizeDotHide: !core.options.imageHeightShow,
             _rotation: core.options.imageRotation,
             _onlyPercentage: core.options.imageSizeOnlyPercentage,
+            _mirrorHide: false,
+            _alignHide: false,
             _ratio: false,
             _ratioX: 1,
             _ratioY: 1
@@ -430,18 +432,32 @@
             for (let i = 0, len = resizeHandles.length; i < len; i++) {
                 resizeHandles[i].style.display = resizeDotShow;
             }
+
+            // mirror buttons
+            const mirrorShow = !contextPlugin._mirrorHide ? '' : 'none';
+            const mirrorbuttons = contextResizing.mirrorButtons;
+            for (let i = 0, len = mirrorbuttons.length; i < len; i++) {
+                mirrorbuttons[i].style.display = mirrorShow;
+            }
     
             if (contextPlugin._resizing) {
                 const rotations = contextResizing.rotationButtons;
                 rotations[0].style.display = rotations[1].style.display = contextPlugin._rotation ? '' : 'none';
             }
     
-            // align icon
-            const alignList = contextResizing.alignMenuList;
-            this.util.changeElement(contextResizing.alignButton.firstElementChild, contextResizing.alignIcons[align]);
-            for (let i = 0, len = alignList.length; i < len; i++) {
-                if (alignList[i].getAttribute('data-value') === align) this.util.addClass(alignList[i], 'on');
-                else this.util.removeClass(alignList[i], 'on');
+            // align
+            const alignButton = contextResizing.alignButton;
+            if (!contextPlugin._alignHide) {
+                // align icon
+                const alignList = contextResizing.alignMenuList;
+                this.util.changeElement(alignButton.firstElementChild, contextResizing.alignIcons[align]);
+                for (let i = 0, len = alignList.length; i < len; i++) {
+                    if (alignList[i].getAttribute('data-value') === align) this.util.addClass(alignList[i], 'on');
+                    else this.util.removeClass(alignList[i], 'on');
+                }
+                alignButton.style.display = '';
+            } else {
+                alignButton.style.display = 'none';
             }
     
             // percentage active

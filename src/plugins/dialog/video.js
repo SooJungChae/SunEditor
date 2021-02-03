@@ -52,6 +52,8 @@ export default {
             _resizeDotHide: !options.videoHeightShow,
             _rotation: options.videoRotation,
             _onlyPercentage: options.videoSizeOnlyPercentage,
+            _mirrorHide: false,
+            _alignHide: false,
             _ratio: false,
             _ratioX: 1,
             _ratioY: 1,
@@ -256,9 +258,9 @@ export default {
     },
 
     /**
-     * @Override @Required fileManager
+     * @Override @Required core - component, fileManager
      */
-    fileTags: ['iframe', 'video'],
+    componentTags: ['iframe', 'video'],
 
     /**
      * @Override core, resizing, fileManager

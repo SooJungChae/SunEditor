@@ -71,6 +71,7 @@
 			tag_blockquote: 'Cita',
 			tag_pre: 'Código',
 			template: 'Plantilla',
+			layout: 'Diseño',
 			lineHeight: 'Altura de la línea',
 			paragraphStyle: 'Estilo del parrafo',
 			textStyle: 'Estilo del texto',
@@ -79,7 +80,7 @@
 		},
 		dialogBox: {
 			linkBox: {
-				title: 'Insertar Link',
+				title: 'Insertar link',
 				url: '¿Hacia que URL lleva el link?',
 				text: 'Texto para mostrar',
 				newWindowCheck: 'Abrir en una nueva ventana',
@@ -87,7 +88,7 @@
                 bookmark: 'Marcador'
 			},
 			mathBox: {
-                title: 'Matemáticas',
+                title: 'Insertar matemáticas',
                 inputLabel: 'Notación Matemática',
                 fontSizeLabel: 'Tamaño de fuente',
                 previewLabel: 'Vista previa'
@@ -99,12 +100,12 @@
 				altText: 'Texto alternativo'
 			},
 			videoBox: {
-				title: 'Insertar Video',
+				title: 'Insertar video',
 				file: 'Seleccionar desde los archivos',
 				url: '¿URL del vídeo? Youtube/Vimeo'
 			},
 			audioBox: {
-                title: 'Insertar Audio',
+                title: 'Insertar audio',
                 file: 'Seleccionar desde los archivos',
                 url: 'URL de la audio'
             },
@@ -152,7 +153,8 @@
 			mergeCells: 'Combinar celdas',
 			splitCells: 'Dividir celdas',
 			HorizontalSplit: 'División horizontal',
-			VerticalSplit: 'División vertical'
+			VerticalSplit: 'División vertical',
+			style: 'Estilo'
 		},
 		menu: {
 			spaced: 'Espaciado',

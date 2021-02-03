@@ -48,6 +48,7 @@ export interface Lang {
     tag_blockquote: string;
     tag_pre: string;
     template: string;
+    layout: string;
     lineHeight: string;
     paragraphStyle: string;
     textStyle: string;
@@ -129,7 +130,8 @@ export interface Lang {
     mergeCells: string;
     splitCells: string;
     HorizontalSplit: string;
-    VerticalSplit: string
+    VerticalSplit: string;
+    style: string;
   };
   menu: {
     spaced: string;

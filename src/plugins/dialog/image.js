@@ -54,6 +54,8 @@ export default {
             _resizeDotHide: !options.imageHeightShow,
             _rotation: options.imageRotation,
             _onlyPercentage: options.imageSizeOnlyPercentage,
+            _mirrorHide: false,
+            _alignHide: false,
             _ratio: false,
             _ratioX: 1,
             _ratioY: 1,
@@ -252,9 +254,9 @@ export default {
     },
 
     /**
-     * @Override @Required fileManager
+     * @Override @Required core - component, fileManager
      */
-    fileTags: ['img'],
+    componentTags: ['img'],
 
     /**
      * @Override core, fileManager, resizing

@@ -71,6 +71,7 @@
             tag_blockquote: '引用',
             tag_pre: '代码',
             template: '模板',
+            layout: '布局',
             lineHeight: '行高',
             paragraphStyle: '段落样式',
             textStyle: '文字样式',
@@ -87,7 +88,7 @@
                 bookmark: '书签'
             },
             mathBox: {
-                title: '数学',
+                title: '插入数学',
                 inputLabel: '数学符号',
                 fontSizeLabel: '字号',
                 previewLabel: '预览'
@@ -151,7 +152,8 @@
             mergeCells: '合并单元格',
             splitCells: '分割单元格',
             HorizontalSplit: '水平分割',
-            VerticalSplit: '垂直分割'
+            VerticalSplit: '垂直分割',
+            style: '风格'
         },
         menu: {
             spaced: '间隔开',

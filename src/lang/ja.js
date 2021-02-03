@@ -71,6 +71,7 @@
             tag_blockquote: '引用',
             tag_pre: 'コード',
             template: 'テンプレート',
+            layout: 'レイアウト',
             lineHeight: '行の高さ',
             paragraphStyle: '段落スタイル',
             textStyle: 'テキストスタイル',
@@ -87,7 +88,7 @@
                 bookmark: 'ブックマーク'
             },
             mathBox: {
-                title: '数学',
+                title: '数学挿入',
                 inputLabel: '数学表記',
                 fontSizeLabel: 'サイズ',
                 previewLabel: 'プレビュー'
@@ -152,7 +153,8 @@
             mergeCells: 'セルの結合',
             splitCells: 'セルを分割',
             HorizontalSplit: '横分割',
-            VerticalSplit: '垂直分割'
+            VerticalSplit: '垂直分割',
+            style: 'スタイル'
         },
         menu: {
             spaced: '文字間隔',

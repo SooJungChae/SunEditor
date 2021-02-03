@@ -71,6 +71,7 @@
             tag_blockquote: 'Citazione',
             tag_pre: 'Codice',
             template: 'Template',
+            layout: 'Disposizione',
             lineHeight: 'Altezza linea',
             paragraphStyle: 'Stile Paragrafo',
             textStyle: 'Stile Testo',
@@ -152,7 +153,8 @@
             mergeCells: 'Unisci celle',
             splitCells: 'Dividi celle',
             HorizontalSplit: 'Separa orizontale',
-            VerticalSplit: 'Separa verticale'
+            VerticalSplit: 'Separa verticale',
+            style: 'Stile'
         },
         menu: {
             spaced: 'Spaziatura',

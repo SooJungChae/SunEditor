@@ -71,6 +71,7 @@
             tag_blockquote: 'Quote',
             tag_pre: 'Citat',
             template: 'Template',
+            layout: 'Aspect',
             lineHeight: 'Înălțime linie',
             paragraphStyle: 'Stil paragraf',
             textStyle: 'Stil text',
@@ -79,7 +80,7 @@
         },
         dialogBox: {
             linkBox: {
-                title: 'Inserează Link',
+                title: 'Inserează link',
                 url: 'Adresă link',
                 text: 'Text de afișat',
                 newWindowCheck: 'Deschide în fereastră nouă',
@@ -87,7 +88,7 @@
                 bookmark: 'Marcaj'
             },
             mathBox: {
-                title: 'Matematică',
+                title: 'Inserează matematică',
                 inputLabel: 'Notație matematică',
                 fontSizeLabel: 'Dimensiune font',
                 previewLabel: 'Previzualizare'
@@ -104,7 +105,7 @@
                 url: 'Include URL, youtube/vimeo'
             },
             audioBox: {
-                title: 'Inserează Audio',
+                title: 'Inserează audio',
                 file: 'Selectează',
                 url: 'URL Audio'
             },
@@ -152,7 +153,8 @@
             mergeCells: 'Îmbină celule',
             splitCells: 'Divizează celule',
             HorizontalSplit: 'Despicare orizontală',
-            VerticalSplit: 'Despicare verticală'
+            VerticalSplit: 'Despicare verticală',
+            style: 'Stil'
         },
         menu: {
             spaced: 'Spațiat',

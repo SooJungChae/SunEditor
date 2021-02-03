@@ -397,8 +397,8 @@ export default {
         options.value = typeof options.value === 'string' ? options.value : null;
         options.historyStackDelayTime = typeof options.historyStackDelayTime === 'number' ? options.historyStackDelayTime : 400;
         /** Whitelist */
-        options._defaultTagsWhitelist = typeof options._defaultTagsWhitelist === 'string' ? options._defaultTagsWhitelist : 'br|p|div|pre|blockquote|h[1-6]|ol|ul|li|hr|figure|figcaption|img|iframe|audio|video|source|table|thead|tbody|tr|th|td|a|b|strong|var|i|em|u|ins|s|span|strike|del|sub|sup|code';
-        options._editorTagsWhitelist = options._defaultTagsWhitelist + (typeof options.addTagsWhitelist === 'string' && options.addTagsWhitelist.length > 0 ? '|' + options.addTagsWhitelist : '');
+        options._defaultTagsWhitelist = typeof options._defaultTagsWhitelist === 'string' ? options._defaultTagsWhitelist : 'br|p|div|pre|blockquote|h[1-6]|ol|ul|li|hr|figure|figcaption|img|iframe|audio|video|source|table|caption|thead|tbody|tr|th|td|a|b|strong|var|i|em|u|ins|s|span|strike|del|sub|sup|code';
+        options._editorTagsWhitelist = options._defaultTagsWhitelist + (typeof options.addTagsWhitelist === 'string' && options.addTagsWhitelist.length > 0 ? '|' + options.addTagsWhitelist : '') + this._getActionComponentTags(options.plugins);
         options.pasteTagsWhitelist = typeof options.pasteTagsWhitelist === 'string' ? options.pasteTagsWhitelist : options._editorTagsWhitelist;
         options.attributesWhitelist = (!options.attributesWhitelist || typeof options.attributesWhitelist !== 'object') ? null : options.attributesWhitelist;
         // @v3
@@ -473,6 +473,17 @@ export default {
         options.paragraphStyles = !options.paragraphStyles ? null : options.paragraphStyles;
         options.textStyles = !options.textStyles ? null : options.textStyles;
         options.fontSizeUnit = typeof options.fontSizeUnit === 'string' ? (options.fontSizeUnit.trim() || 'px') : 'px';
+        const as = options.styleForms || {};
+        options.styleForms = {
+            image: typeof as.image === 'undefined' ? as.all : as.image,
+            video: typeof as.video === 'undefined' ? as.all : as.video,
+            audio: typeof as.audio === 'undefined' ? as.all : as.audio,
+            link: typeof as.link === 'undefined' ? as.all : as.link,
+            math: typeof as.math === 'undefined' ? as.all : as.math,
+            table: typeof as.table === 'undefined' ? as.all : as.table,
+            button: typeof as.button === 'undefined' ? as.all : as.button,
+            dropdown: typeof as.dropdown === 'undefined' ? as.all : as.dropdown
+        };
         /** Image */
         options.imageResizing = options.imageResizing === undefined ? true : options.imageResizing;
         options.imageHeightShow = options.imageHeightShow === undefined ? true : !!options.imageHeightShow;
@@ -536,6 +547,7 @@ export default {
         options.callBackSave = !options.callBackSave ? null : options.callBackSave;
         /** Templates Array */
         options.templates = !options.templates ? null : options.templates;
+        options.layoutList = !options.layoutList ? null : options.layoutList;
         /** ETC */
         options.placeholder = typeof options.placeholder === 'string' ? options.placeholder : null;
         options.mediaAutoSelect = options.mediaAutoSelect === undefined ? true : !!options.mediaAutoSelect;
@@ -574,6 +586,16 @@ export default {
         options._editorStyles = util._setDefaultOptionStyle(options, options.defaultStyle);
     },
 
+    _getActionComponentTags: function (plugins) {
+        if (!plugins) return '';
+
+        let allowTags = '';
+        if (plugins.button) allowTags += '|button';
+        if (plugins.dropdown) allowTags += '|select|option';
+
+        return allowTags;
+    },
+
     /**
      * @description Suneditor's Default button list
      * @param {Object} options options
@@ -608,6 +630,8 @@ export default {
             save: ['_se_command_save se-resizing-enabled', lang.toolbar.save + '<span class="se-shortcut">' + (shortcutsDisable.indexOf('save') > -1 ? '' : cmd + '+<span class="se-shortcut-key">S</span>') + '</span>', 'save', '', icons.save],
             /** plugins - command */
             blockquote: ['', lang.toolbar.tag_blockquote, 'blockquote', 'command', icons.blockquote],
+            // button: ['', lang.toolbar.button, 'button', 'command', icons.button],
+            // dropdown: ['', lang.toolbar.dropdown, 'dropdown', 'command', icons.dropdown],
             /** plugins - submenu */
             font: ['se-btn-select se-btn-tool-font', lang.toolbar.font, 'font', 'submenu', '<span class="txt">' + lang.toolbar.font + '</span>' + icons.arrow_down],
             formatBlock: ['se-btn-select se-btn-tool-format', lang.toolbar.formats, 'formatBlock', 'submenu', '<span class="txt">' + lang.toolbar.formats + '</span>' + icons.arrow_down],
@@ -620,6 +644,7 @@ export default {
             table: ['', lang.toolbar.table, 'table', 'submenu', icons.table],
             lineHeight: ['', lang.toolbar.lineHeight, 'lineHeight', 'submenu', icons.line_height],
             template: ['', lang.toolbar.template, 'template', 'submenu', icons.template],
+            layout: ['', lang.toolbar.layout, 'layout', 'submenu', icons.layout],
             paragraphStyle: ['', lang.toolbar.paragraphStyle, 'paragraphStyle', 'submenu', icons.paragraph_style],
             textStyle: ['', lang.toolbar.textStyle, 'textStyle', 'submenu', icons.text_style],
             /** plugins - dialog */

@@ -222,9 +222,9 @@ export default {
     },
 
     /**
-     * @Required @Override fileManager
+     * @Required @Override core - component, fileManager
      */
-    fileTags: ['audio'],
+    componentTags: ['audio'],
 
     /**
      * @Override core, fileManager, resizing

@@ -83,7 +83,7 @@ export default {
         context.element.relative.appendChild(tableController);
 
         /** empty memory */
-        listDiv = null, tablePicker = null, resizeDiv = null, tableController = null, contextTable = null;
+        listDiv = null, tablePicker = null, resizeDiv = null, tableController = null;
     },
 
     setSubmenu: function (core) {

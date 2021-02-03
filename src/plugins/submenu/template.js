@@ -58,7 +58,9 @@ export default {
         const temp = this.options.templates[e.target.getAttribute('data-value')];
 
         if (temp.html) {
-            this.setContents(temp.html);
+            this.functions.appendContents(temp.html, this.util.getParentElement(this.getSelectionNode(), function (current) {
+                return this.isTable(current) || this.isList(current) || (this.isFormatElement(current) && !this.isCell(current) && !this.isListCell(current));
+            }.bind(this.util)));
         } else {
             this.submenuOff();
             throw Error('[SUNEDITOR.template.fail] cause : "templates[i].html not found"');

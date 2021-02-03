@@ -71,6 +71,7 @@
             tag_blockquote: 'Zitat',
             tag_pre: 'Quellcode',
             template: 'Vorlage',
+            layout: 'Layout',
             lineHeight: 'Zeilenhöhe',
             paragraphStyle: 'Absatzstil',
             textStyle: 'Textstil',
@@ -87,7 +88,7 @@
                 bookmark: 'Lesezeichen'
             },
             mathBox: {
-                title: 'Mathematik',
+                title: 'Mathematik einfügen',
                 inputLabel: 'Mathematische Notation',
                 fontSizeLabel: 'Schriftgröße',
                 previewLabel: 'Vorschau'
@@ -99,12 +100,12 @@
                 altText: 'Alternativer Text'
             },
             videoBox: {
-                title: 'Video enfügen',
+                title: 'Video einfügen',
                 file: 'Datei auswählen',
                 url: 'Video-URL, YouTube/Vimeo'
             },
             audioBox: {
-                title: 'Audio enfügen',
+                title: 'Audio einfügen',
                 file: 'Datei auswählen',
                 url: 'Audio-URL'
             },
@@ -152,7 +153,8 @@
             mergeCells: 'Zellen verbinden',
             splitCells: 'Zellen teilen',
             HorizontalSplit: 'Horizontal teilen',
-            VerticalSplit: 'Vertikal teilen'
+            VerticalSplit: 'Vertikal teilen',
+            style: 'Stil'
         },
         menu: {
             spaced: 'Buchstabenabstand',

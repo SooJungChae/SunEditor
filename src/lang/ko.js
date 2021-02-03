@@ -71,6 +71,7 @@
             tag_blockquote: '인용문',
             tag_pre: '코드',
             template: '템플릿',
+            layout: '레이아웃',
             lineHeight: '줄 높이',
             paragraphStyle: '문단 스타일',
             textStyle: '글자 스타일',
@@ -87,7 +88,7 @@
                 bookmark: '북마크'
             },
             mathBox: {
-                title: '수식',
+                title: '수식 삽입',
                 inputLabel: '수학적 표기법',
                 fontSizeLabel: '글자 크기',
                 previewLabel: '미리보기'
@@ -152,7 +153,8 @@
             mergeCells: '셀 병합',
             splitCells: '셀 분할',
             HorizontalSplit: '가로 분할',
-            VerticalSplit: '세로 분할'
+            VerticalSplit: '세로 분할',
+            style: '스타일'
         },
         menu: {
             spaced: '글자 간격',
