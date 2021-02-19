@@ -181,7 +181,10 @@ suneditor.create(appEl, {
     katex: Katex,
     width: '400px',
     height: 500,
-    buttonList: complexEditor
+    buttonList: complexEditor,
+    allowStyles: {
+        format: 'background|font-size'
+    }
 })
 
 let ssss = suneditor.create(("sample1"), {

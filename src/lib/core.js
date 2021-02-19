@@ -4637,9 +4637,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             if (tAttr) v = m.match(tAttr);
             else v = m.match(this._attributesWhitelistRegExp);
 
-            if ((rowLevelCheck || /<span/i.test(t)) && (!v || !/style=/i.test(v.toString()))) {
-            // @v3
-            // if (!v || !/style=/i.test(v.toString())) {
+            if (rowLevelCheck && (!v || !/style=/i.test(v.toString()))) {
                 const sv = m.match(/style\s*=\s*"[^"]*"/);
                 if (sv) {
                     if (!v) v = [];
@@ -4677,7 +4675,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
 
             const dom = _d.createRange().createContextualFragment(html);
             try {
-                util._consistencyCheckOfHTML(dom, this._htmlCheckWhitelistRegExp, options.allowStyles);
+                util._consistencyCheckOfHTML(dom, this._htmlCheckWhitelistRegExp, options.stylesWhitelist);
             } catch (error) {
                 console.warn('[SUNEDITOR.cleanHTML.consistencyCheck.fail] ' + error);
             }
@@ -4727,7 +4725,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             const dom = _d.createRange().createContextualFragment(this._deleteDisallowedTags(contents));
 
             try {
-                util._consistencyCheckOfHTML(dom, this._htmlCheckWhitelistRegExp, options.allowStyles);
+                util._consistencyCheckOfHTML(dom, this._htmlCheckWhitelistRegExp, options.stylesWhitelist);
             } catch (error) {
                 console.warn('[SUNEDITOR.convertContentsForEditor.consistencyCheck.fail] ' + error);
             }
@@ -5008,7 +5006,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             this._disallowedTextTagsRegExp = disallowTextTags.length === 0 ? null : new wRegExp('(<\\/?)(' + disallowTextTags.join('|') + ')\\b\\s*(?:[^>^<]+)?\\s*(?=>)', 'gi');
 
             // set whitelist
-            const defaultAttr = 'contenteditable|colspan|rowspan|target|href|download|rel|src|alt|class|type|controls|data-format|data-size|data-file-size|data-file-name|data-origin|data-align|data-image-link|data-rotate|data-proportion|data-percentage|origin-size|data-exp|data-font-size';
+            const defaultAttr = 'style|contenteditable|colspan|rowspan|target|href|download|rel|src|alt|class|type|controls|data-format|data-size|data-file-size|data-file-name|data-origin|data-align|data-image-link|data-rotate|data-proportion|data-percentage|origin-size|data-exp|data-font-size';
             this._allowHTMLComments = options._editorTagsWhitelist.indexOf('//') > -1;
             this._htmlCheckWhitelistRegExp = new wRegExp('^(' + options._editorTagsWhitelist.replace('|//', '') + ')$', 'i');
             this.editorTagsWhitelistRegExp = util.createTagsWhitelist(options._editorTagsWhitelist.replace('|//', '|<!--|-->'));

@@ -401,31 +401,25 @@ export default {
         options._editorTagsWhitelist = options._defaultTagsWhitelist + (typeof options.addTagsWhitelist === 'string' && options.addTagsWhitelist.length > 0 ? '|' + options.addTagsWhitelist : '') + this._getActionComponentTags(options.plugins);
         options.pasteTagsWhitelist = typeof options.pasteTagsWhitelist === 'string' ? options.pasteTagsWhitelist : options._editorTagsWhitelist;
         options.attributesWhitelist = (!options.attributesWhitelist || typeof options.attributesWhitelist !== 'object') ? null : options.attributesWhitelist;
-        // @v3
-        // const defaultAllowStyles = {
-        //     format: ['margin-left', 'margin-right', 'text-align', 'line-height'],
-        //     rangeFormat: [],
-        //     closureRangeFormat: [],
-        //     freeFormat: [],
-        //     closureFreeFormat: [],
-        //     component: [],
-        //     span: ['font-family', 'color', 'background-color', 'font-size']
-        // };
-        // options.allowStyles = (!options.allowStyles || typeof options.allowStyles !== 'object') ? defaultAllowStyles : [defaultAllowStyles, options.allowStyles].reduce(function (_default, _new) {
-        //     for (let key in _new) {
-        //         if (!_default[key]) _default[key] = [];
-        //         const newStyle = _new[key];
-        //         if (typeof newStyle === 'string') {
-        //             _default[key] = !newStyle ? [] : newStyle.split('|');
-        //         } else {
-        //             for (let i = 0, len = newStyle.length, n; i < len; i++) {
-        //                 n = newStyle[i];
-        //                 if (_default[key].indexOf(n) === -1) _default[key].push(n)
-        //             }
-        //         }
-        //     }
-        //     return _default;
-        // }, {});
+        const _defaultAllowStyles = {
+            format: 'margin(-(left|right))|text-align|line-height',
+            rangeFormat: '',
+            closureRangeFormat: '',
+            freeFormat: '',
+            closureFreeFormat: '',
+            component: '',
+            span: 'font-family|color|background-color|font-size'
+        };
+        const allowStyles = options.stylesWhitelist = [_defaultAllowStyles, (!options.allowStyles || typeof options.allowStyles !== 'object') ? {} : options.allowStyles].reduce(function (_default, _new) {
+            for (let key in _new) {
+                const newStyle = _new[key];
+                _default[key] = newStyle ? _default[key] ? _default[key] + '|' + newStyle : newStyle : '';
+            }
+            return _default;
+        }, {});
+        for (let key in allowStyles) {
+            if (allowStyles[key]) allowStyles[key] = new RegExp('^' + allowStyles[key] + '$', 'i');
+        }
         /** Layout */
         options.mode = options.mode || 'classic'; // classic, inline, balloon, balloon-always
         options.rtl = !!options.rtl;
