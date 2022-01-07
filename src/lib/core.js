@@ -5036,6 +5036,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
          * @returns {String}
          */
         convertContentsForEditor: function (contents) {
+            console.log('convertContentsForEditor');
             contents = this._deleteDisallowedTags(this._parser.parseFromString(contents, 'text/html').body.innerHTML).replace(/(<[a-zA-Z0-9\-]+)[^>]*(?=>)/g, this._cleanTags.bind(this, false));
             const dom = _d.createRange().createContextualFragment(contents);
 
@@ -5090,6 +5091,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
          * @returns {String}
          */
         convertHTMLForCodeView: function (html, comp) {
+            console.log('convertHTMLForCodeView');
             let returnHTML = '';
             const wRegExp = _w.RegExp;
             const brReg = new wRegExp('^(BLOCKQUOTE|PRE|TABLE|THEAD|TBODY|TR|TH|TD|OL|UL|IMG|IFRAME|VIDEO|AUDIO|FIGURE|FIGCAPTION|HR|BR|CANVAS|SELECT)$', 'i');
@@ -6330,6 +6332,8 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
             const fileComponentName = core._fileManager.pluginRegExp.test(core.currentControllerName) ? core.currentControllerName : '';
             let formatEl = util.getFormatElement(selectionNode, null) || selectionNode;
             let rangeEl = util.getRangeFormatElement(formatEl, null);
+
+            console.log(range.endOffset, keyCode);
 
             switch (keyCode) {
                 case 8: /** backspace key */

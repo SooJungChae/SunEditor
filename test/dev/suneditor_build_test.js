@@ -654,7 +654,7 @@ ss.onAudioUploadBefore = function (files, info, core) {
     return true
 }
 ss.onChange = function (contents, core) {
-    console.log('change', core.context.video._infoList)
+    console.log('change!', core.context.video._infoList)
 }
 
 // ss.imageUploadHandler = function (response, core) {
@@ -912,8 +912,6 @@ const editor = suneditor.init({
 
 let s2 = window.s2 = editor.create(document.getElementById('editor2'), {
     buttonList: [
-        ['undo', 'redo'],
-        ['font', 'fontSize', 'formatBlock', 'align', 'lineHeight'],
         ['bold', 'underline', 'italic', 'strike', 'fontColor', 'hiliteColor'],
         ['removeFormat'],
         ['-right', ':i-More Misc-default.more_vertical', 'showBlocks', 'codeView', 'preview', 'print', 'save'],
@@ -960,15 +958,24 @@ let s2 = window.s2 = editor.create(document.getElementById('editor2'), {
         'Vazir', 'Arial', 'Comic Sans MS', 'Courier New', 'Impact',
         'Georgia', 'tahoma', 'Trebuchet MS', 'Verdana'
     ],
+    textTags: {
+      italic: 'i',
+    },
     iframe: true,
     fullPage: true,
     imageMultipleFile: true,
+
 });
 
 s2.onResizeEditor = (height, prevHeight, core) => {
     console.log("heig", height)
     console.log("prevHeight", prevHeight)
     console.log("core", core)
+}
+
+s2.onChange = (contents, core) => {
+    console.log(contents);
+    console.log('change!', core.context.video._infoList)
 }
 
 // plugins.mention.getItems = async term => 
